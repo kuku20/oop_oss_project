@@ -7,7 +7,7 @@ CreateAccount(String id,String password){
 	setId(id);
 	setPassword(password);
 }
-CreateAccount(String id,String name, String address,String password ,String phone,String creditCard ){
+CreateAccount(String id,String password,String name, String address ,String phone,String creditCard ){
 	setId(id);
 	setName(name);
 	setAddress(address);
@@ -21,7 +21,7 @@ void setId(String id) {
 void setName(String name) {this.name=name;}
 void setAddress(String address) {this.address=address;}
 void setPassword(String password) {this.password=password;}
-void setPhone(String phone) {this.password=phone;}
+void setPhone(String phone) {this.phone=phone;}
 void setCreditCard(String creditCard) {this.creditCard=creditCard;}
 String getId() {
 	return id;}
@@ -37,6 +37,6 @@ String getCreditCard() {
 	return creditCard;}
 
 public String toString() {
-	return name;}
+	return id + password + name + address + phone + creditCard;}
 }
 
