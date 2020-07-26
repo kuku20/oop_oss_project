@@ -40,7 +40,7 @@ String getCreditCard() {
 //the return for the customer
 public String toStringCustomer() {
 	return id + "\n"+password + "\n"+name + "\n"+address + "\n"+phone + "\n"+creditCard;}
-
+//the retuern for the suppier
 public String toStringSuppier() {
-	return id+ password;}
+	return id+ "\n"+password;}
 }
