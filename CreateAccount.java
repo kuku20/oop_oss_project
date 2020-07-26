@@ -3,10 +3,12 @@ package oop_OSS;
 public class CreateAccount {
 String id,name,address,password,phone,creditCard;
 CreateAccount(){};
+//for the supplier
 CreateAccount(String id,String password){
 	setId(id);
 	setPassword(password);
 }
+//for the customer
 CreateAccount(String id,String password,String name, String address ,String phone,String creditCard ){
 	setId(id);
 	setName(name);
@@ -35,8 +37,10 @@ String getPhone() {
 	return phone;}
 String getCreditCard() {
 	return creditCard;}
+//the return for the customer
+public String toStringCustomer() {
+	return id + "\n"+password + "\n"+name + "\n"+address + "\n"+phone + "\n"+creditCard;}
 
-public String toString() {
-	return id + password + name + address + phone + creditCard;}
+public String toStringSuppier() {
+	return id+ password;}
 }
-
