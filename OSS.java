@@ -81,63 +81,85 @@ public class OSS {
 			IdCustomer.add(id);
 			passCustomer.add(pw);
 		}
+		
 		File readSuplier = new File("Suplier.txt");
-		Scanner getSuplier = new Scanner(readCustomer);
-		while (getCustomer.hasNext()) {
-			String id = getCustomer.nextLine();
-			String pw = getCustomer.nextLine();
+		Scanner getSuplier = new Scanner(readSuplier);
+		while (getSuplier.hasNext()) {
+			String id = getSuplier.nextLine();
+			String pw = getSuplier.nextLine();
 			IdSuplier.add(id);
 			passSuplier.add(pw);
 		}
+	
 	}
 
 	private static void suplierAccount() throws IOException {
-		CreateAccount newSupplier = new CreateAccount();
-		newSupplier.setId("2");
-		newSupplier.setPassword("afdsfa");
+		Scanner in = new Scanner(System.in);
+		//First employee objects with the input
+		System.out.println("Wellcome to create new suplier");
+		System.out.print("Enter the id: ");
+		String supId = in.next();
+		System.out.print("Enter the pass: ");
+		String supPass = in.next();
+		CreateAccount newSupplier = new CreateAccount(supId,supPass);
 		File cus = new File(".");
 		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Suplier.txt", true);
 		BufferedWriter output = new BufferedWriter(customer);
 		boolean exist = IdCustomer.contains(newSupplier.getId());
 		if (exist) {
 			System.out.println("it existed");
-			// customerLogin();
+			// suplierLogin();
 		} else {
 			output.write(newSupplier.toStringSuppier());
 			output.newLine();
 			System.out.println("Your account have been created.");
 			output.close();
-			// customerLogin();
+//			suplierLogin();
 		}
 	}
 
-	private static void suplierLogin() {
-		LogIn suplierLogin = new LogIn(null, null);
-		suplierLogin.setId("123459");
-		suplierLogin.setPassword("oopsumer2020");
-
+	private static void suplierLogin() throws IOException {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Wellcome to create suplier LOGIN");
+		System.out.print("Enter the id: ");
+		String sumId = in.next();
+		System.out.print("Enter the pass: ");
+		String sumPass = in.next();
+		LogIn suplierLogin = new LogIn(sumId, sumPass);
+	
 		boolean idexist = IdSuplier.contains(suplierLogin.getId());
+		
 		if (idexist) {
 			for (int i = 0; i < IdSuplier.size(); i++) {
 				if (suplierLogin.getId().equals(IdSuplier.get(i))
 						&& suplierLogin.getPassword().equals(passSuplier.get(i))) {
-					System.out.println("You log in");
+					suplierLogin.toLogin();
 				}
 				if (suplierLogin.getId().equals(IdSuplier.get(i))
 						&& !suplierLogin.getPassword().equals(passSuplier.get(i))) {
 					System.out.println("Wrong pass");
-					// customerLogin();
+//					suplierLogin();
 				}
 			}
 		} else {
 			System.out.println(" There is no account");
+//			suplierAccount();
 		}
 	}
 
 	private static void customerAccount() throws IOException {
 		// customer account
-		CreateAccount newcustomer = new CreateAccount("12345", "oopsumer2020", "loc", "Bushy Creek Houston TX",
-				"8325322153", "***********9865");
+		Scanner in = new Scanner(System.in);
+		//First employee objects with the input
+		System.out.println("Wellcome to create new customer Account");
+		System.out.print("Enter the customer id: ");String cusId = in.next();
+		System.out.print("Enter the customer pass: ");String cusPass = in.next();
+		System.out.print("Enter the customer name: ");String cusN = in.next();
+		System.out.print("Enter the customer address: ");String cusAd = in.next();
+		System.out.print("Enter the customer phone: ");String cusPh = in.next();
+		System.out.print("Enter the customer Creadit Card: ");String cusCc = in.next();
+		CreateAccount newcustomer = new CreateAccount(cusId, cusPass, cusN, cusAd,
+				cusPh, cusCc);
 		// create file and store the information of customer
 		File cus = new File(".");
 		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
@@ -156,17 +178,18 @@ public class OSS {
 	}
 
 	private static void customerLogin() throws IOException {
-
-		LogIn customerLogin = new LogIn(null, null);
-		customerLogin.setId("123459");
-		customerLogin.setPassword("oopsumer2020");
-
+		Scanner in = new Scanner(System.in);
+		//First employee objects with the input
+		System.out.println("Wellcome to customer Login");
+		System.out.print("Enter the customer id: ");String cusLogId = in.next();
+		System.out.print("Enter the customer pass: ");String cusLogPass = in.next();
+		LogIn customerLogin = new LogIn(cusLogId, cusLogPass);
 		boolean idexist = IdCustomer.contains(customerLogin.getId());
 		if (idexist) {
 			for (int i = 0; i < IdCustomer.size(); i++) {
 				if (customerLogin.getId().equals(IdCustomer.get(i))
 						&& customerLogin.getPassword().equals(passCustomer.get(i))) {
-					System.out.println("You log in");
+					customerLogin.toLogin();
 				}
 				if (customerLogin.getId().equals(IdCustomer.get(i))
 						&& !customerLogin.getPassword().equals(passCustomer.get(i))) {
