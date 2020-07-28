@@ -49,6 +49,7 @@ public class OSS {
 			switch (sChoice) {
 			case '1':
 				suplierLogin();
+				
 				break;
 			case '2':
 				suplierAccount();
@@ -60,61 +61,61 @@ public class OSS {
 
 	private static void file() throws IOException {
 		// CheckId idcheck = new accountCheck();
-		File cus = new File(".");
-		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
+				File cus = new File(".");
+				FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
 
-		File sup = new File(".");
-		FileWriter suplier = new FileWriter(sup.getCanonicalPath() + File.separator + "Suplier.txt", true);
-		File readCustomer = new File("Customer.txt");
-		// if (!Read.exists()) {
-		// System.out.println("The file does not exist.");
-		// System.exit(0);
-		// }
-		Scanner getCustomer = new Scanner(readCustomer);
-		while (getCustomer.hasNext()) {
-			String id = getCustomer.nextLine();
-			String pw = getCustomer.nextLine();
-			String n = getCustomer.nextLine();
-			String ad = getCustomer.nextLine();
-			String ph = getCustomer.nextLine();
-			String cc = getCustomer.nextLine();
-			IdCustomer.add(id);
-			passCustomer.add(pw);
-		}
-		
-		File readSuplier = new File("Suplier.txt");
-		Scanner getSuplier = new Scanner(readSuplier);
-		while (getSuplier.hasNext()) {
-			String id = getSuplier.nextLine();
-			String pw = getSuplier.nextLine();
-			IdSuplier.add(id);
-			passSuplier.add(pw);
-		}
-	
+				File sup = new File(".");
+				FileWriter suplier = new FileWriter(sup.getCanonicalPath() + File.separator + "Suplier.txt", true);
+				File readCustomer = new File("Customer.txt");
+				// if (!Read.exists()) {
+				// System.out.println("The file does not exist.");
+				// System.exit(0);
+				// }
+				Scanner getCustomer = new Scanner(readCustomer);
+				while (getCustomer.hasNext()) {
+					String id = getCustomer.nextLine();
+					String pw = getCustomer.nextLine();
+					String n = getCustomer.nextLine();
+					String ad = getCustomer.nextLine();
+					String ph = getCustomer.nextLine();
+					String cc = getCustomer.nextLine();
+					IdCustomer.add(id);
+					passCustomer.add(pw);
+				}
+
+				File readSuplier = new File("Suplier.txt");
+				Scanner getSuplier = new Scanner(readSuplier);
+				while (getSuplier.hasNext()) {
+					String id = getSuplier.nextLine();
+					String pw = getSuplier.nextLine();
+					IdSuplier.add(id);
+					passSuplier.add(pw);
+				}
+
 	}
 
 	private static void suplierAccount() throws IOException {
 		Scanner in = new Scanner(System.in);
-		//First employee objects with the input
+		// First employee objects with the input
 		System.out.println("Wellcome to create new suplier");
 		System.out.print("Enter the id: ");
-		String supId = in.next();
+		String supNewId = in.next();
 		System.out.print("Enter the pass: ");
-		String supPass = in.next();
-		CreateAccount newSupplier = new CreateAccount(supId,supPass);
+		String supNewPass = in.next();
+		CreateAccount newSupplier = new CreateAccount(supNewId, supNewPass);
 		File cus = new File(".");
 		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Suplier.txt", true);
 		BufferedWriter output = new BufferedWriter(customer);
-		boolean exist = IdCustomer.contains(newSupplier.getId());
+		boolean exist = IdSuplier.contains(newSupplier.getId());
 		if (exist) {
 			System.out.println("it existed");
-			// suplierLogin();
+			 suplierLogin();
 		} else {
 			output.write(newSupplier.toStringSuppier());
 			output.newLine();
 			System.out.println("Your account have been created.");
 			output.close();
-//			suplierLogin();
+			 suplierLogin();
 		}
 	}
 
@@ -126,9 +127,9 @@ public class OSS {
 		System.out.print("Enter the pass: ");
 		String sumPass = in.next();
 		LogIn suplierLogin = new LogIn(sumId, sumPass);
-	
+
 		boolean idexist = IdSuplier.contains(suplierLogin.getId());
-		
+
 		if (idexist) {
 			for (int i = 0; i < IdSuplier.size(); i++) {
 				if (suplierLogin.getId().equals(IdSuplier.get(i))
@@ -138,28 +139,33 @@ public class OSS {
 				if (suplierLogin.getId().equals(IdSuplier.get(i))
 						&& !suplierLogin.getPassword().equals(passSuplier.get(i))) {
 					System.out.println("Wrong pass");
-//					suplierLogin();
+					 suplierLogin();
 				}
 			}
 		} else {
 			System.out.println(" There is no account");
-//			suplierAccount();
+			 suplierAccount();
 		}
 	}
 
 	private static void customerAccount() throws IOException {
 		// customer account
 		Scanner in = new Scanner(System.in);
-		//First employee objects with the input
+		// First employee objects with the input
 		System.out.println("Wellcome to create new customer Account");
-		System.out.print("Enter the customer id: ");String cusId = in.next();
-		System.out.print("Enter the customer pass: ");String cusPass = in.next();
-		System.out.print("Enter the customer name: ");String cusN = in.next();
-		System.out.print("Enter the customer address: ");String cusAd = in.next();
-		System.out.print("Enter the customer phone: ");String cusPh = in.next();
-		System.out.print("Enter the customer Creadit Card: ");String cusCc = in.next();
-		CreateAccount newcustomer = new CreateAccount(cusId, cusPass, cusN, cusAd,
-				cusPh, cusCc);
+		System.out.print("Enter the customer id: ");
+		String cusId = in.next();
+		System.out.print("Enter the customer pass: ");
+		String cusPass = in.next();
+		System.out.print("Enter the customer name: ");
+		String cusN = in.next();
+		System.out.print("Enter the customer address: ");
+		String cusAd = in.next();
+		System.out.print("Enter the customer phone: ");
+		String cusPh = in.next();
+		System.out.print("Enter the customer Creadit Card: ");
+		String cusCc = in.next();
+		CreateAccount newcustomer = new CreateAccount(cusId, cusPass, cusN, cusAd, cusPh, cusCc);
 		// create file and store the information of customer
 		File cus = new File(".");
 		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
@@ -179,17 +185,33 @@ public class OSS {
 
 	private static void customerLogin() throws IOException {
 		Scanner in = new Scanner(System.in);
-		//First employee objects with the input
+		// First employee objects with the input
 		System.out.println("Wellcome to customer Login");
-		System.out.print("Enter the customer id: ");String cusLogId = in.next();
-		System.out.print("Enter the customer pass: ");String cusLogPass = in.next();
+		System.out.print("Enter the customer id: ");
+		String cusLogId = in.next();
+		System.out.print("Enter the customer pass: ");
+		String cusLogPass = in.next();
 		LogIn customerLogin = new LogIn(cusLogId, cusLogPass);
 		boolean idexist = IdCustomer.contains(customerLogin.getId());
 		if (idexist) {
 			for (int i = 0; i < IdCustomer.size(); i++) {
 				if (customerLogin.getId().equals(IdCustomer.get(i))
 						&& customerLogin.getPassword().equals(passCustomer.get(i))) {
+
 					customerLogin.toLogin();
+//					this is where customer can choice to logout or go to the catalog
+//			catalog
+					catalogList firstC = new customerChoice();
+					firstC.cart(customerLogin.getId());
+					firstC.catalogList(customerLogin.getId());
+					
+					choiceInlist Cchoice =  (choiceInlist) firstC;
+					Cchoice.ItemId();
+					Cchoice.Cid();
+					System.out.println(Cchoice.ItemId());
+					System.out.println(Cchoice.Cid());
+					firstC.cart(customerLogin.getId());
+					
 				}
 				if (customerLogin.getId().equals(IdCustomer.get(i))
 						&& !customerLogin.getPassword().equals(passCustomer.get(i))) {
@@ -202,5 +224,25 @@ public class OSS {
 		}
 
 	}
+
+//	private static void catalogList() throws IOException {
+//		
+//		System.out.println("There are the list of items: "
+//				+ "\n 1. phone 8 price $800"
+//				+ "\n 2. laptop price $1200"
+//				+ "\n 3. tv price $100"
+//				+ "\n 4. hat price $1200"
+//				+ "\n 5. guita price $1200");
+//		Scanner choiceI = new Scanner(System.in);
+//		// First employee objects with the input
+//		System.out.print("Enter the Item : ");
+//		String cusItemID = choiceI.next();
+//		System.out.println("how many??");
+//		String cusItemQ = choiceI.next();
+//		catalog list = new catalog(cusItemID, "something", cusItemQ);
+//		
+//		
+//		
+//	}
 
 }
