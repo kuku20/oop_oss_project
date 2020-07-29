@@ -50,8 +50,44 @@ class customerChoice implements catalogList, choiceInlist {
 	}
 	@Override
 	public void cart(String Cid) {
-		System.out.println("The id customer: "+ Cid+ "has browed and add item: "+idItem+ "To his cart." );
+		System.out.println("The id customer: "+ Cid+ " has browsed and add item: "+ idItem + " To his cart." );
 		
 	}
 
 }
+
+class Bank implements OrderRequest{
+	String CCN;
+	double amount;
+	double number;
+	Bank(String CCN, double amount){
+		this.CCN=CCN;
+		this.amount=amount;
+	}
+	@Override
+	public void orderAmountCheck(double amount) {
+		System.out.println("The bank have check the cc for the amount purchase: "+amount);	
+//		generate the authorization number
+		 number =123546;
+	}
+	@Override
+	public double checkApprove() {
+		return number;
+	}
+	@Override
+	public void CCCheck(String CCN) {
+//if invalid credit card or over credit limit
+		System.out.println("please use order credit card number.");
+//		enter different ccn or cance the order
+//		update new card number to customer's account
+		
+	}
+	@Override
+	public void toDisplayOrder(String Display) {
+		// TODO Auto-generated method stub
+		System.out.println("to customer: this is your order detail...");
+	}
+
+
+
+	}

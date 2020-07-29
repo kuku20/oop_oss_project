@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class OSS {
 	public static ArrayList<String> IdSuplier = new ArrayList<String>();
 	public static ArrayList<String> passCustomer = new ArrayList<String>();
 	public static ArrayList<String> passSuplier = new ArrayList<String>();
+	public static ArrayList<String> creditCardCustomer = new ArrayList<String>();
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("Wellcome to Online Shopping");
@@ -81,6 +83,7 @@ public class OSS {
 					String cc = getCustomer.nextLine();
 					IdCustomer.add(id);
 					passCustomer.add(pw);
+					creditCardCustomer.add(cc);
 				}
 
 				File readSuplier = new File("Suplier.txt");
@@ -152,20 +155,21 @@ public class OSS {
 		// customer account
 		Scanner in = new Scanner(System.in);
 		// First employee objects with the input
-		System.out.println("Wellcome to create new customer Account");
-		System.out.print("Enter the customer id: ");
-		String cusId = in.next();
-		System.out.print("Enter the customer pass: ");
-		String cusPass = in.next();
-		System.out.print("Enter the customer name: ");
-		String cusN = in.next();
-		System.out.print("Enter the customer address: ");
-		String cusAd = in.next();
-		System.out.print("Enter the customer phone: ");
-		String cusPh = in.next();
-		System.out.print("Enter the customer Creadit Card: ");
-		String cusCc = in.next();
-		CreateAccount newcustomer = new CreateAccount(cusId, cusPass, cusN, cusAd, cusPh, cusCc);
+//		System.out.println("Wellcome to create new customer Account");
+//		System.out.print("Enter the customer id: ");
+//		String cusId = in.next();
+//		System.out.print("Enter the customer pass: ");
+//		String cusPass = in.next();
+//		System.out.print("Enter the customer name: ");
+//		String cusN = in.next();
+//		System.out.print("Enter the customer address: ");
+//		String cusAd = in.next();
+//		System.out.print("Enter the customer phone: ");
+//		String cusPh = in.next();
+//		System.out.print("Enter the customer Creadit Card: ");
+//		String cusCc = in.next();
+//		CreateAccount newcustomer = new CreateAccount(cusId, cusPass, cusN, cusAd, cusPh, cusCc);
+		CreateAccount newcustomer = new CreateAccount("1","1","Kim","UK","8924233215","************9986");
 		// create file and store the information of customer
 		File cus = new File(".");
 		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
@@ -202,15 +206,32 @@ public class OSS {
 //					this is where customer can choice to logout or go to the catalog
 //			catalog
 					catalogList firstC = new customerChoice();
-					firstC.cart(customerLogin.getId());
 					firstC.catalogList(customerLogin.getId());
 					
 					choiceInlist Cchoice =  (choiceInlist) firstC;
-					Cchoice.ItemId();
-					Cchoice.Cid();
-					System.out.println(Cchoice.ItemId());
-					System.out.println(Cchoice.Cid());
+
+//					System.out.println(Cchoice.ItemId());
+//					System.out.println(Cchoice.Cid());
 					firstC.cart(customerLogin.getId());
+					
+//					this will get the indexof the idcomtomer
+					int indexCustomer= IdCustomer.indexOf(customerLogin.getId());
+//					this is the creaditcard of that customer: 
+					String ccnc= creditCardCustomer.get(indexCustomer);
+					System.out.println(creditCardCustomer.get(indexCustomer));
+					double amountDue=102.3;
+//					connect and check to the bank
+					Bank cusCheckBank = new Bank(ccnc, amountDue);
+					cusCheckBank.orderAmountCheck(amountDue);
+					System.out.println(cusCheckBank.checkApprove());
+//					if cc doesn't work update new card
+//					store a delivery order in textfile
+					PrintWriter orderFile = new PrintWriter("order.txt");
+//					store a delivery order in file
+					orderFile.println(customerLogin.getId());
+					orderFile.println(Cchoice.ItemId());
+					orderFile.println(cusCheckBank.checkApprove());
+					orderFile.close();
 					
 				}
 				if (customerLogin.getId().equals(IdCustomer.get(i))
