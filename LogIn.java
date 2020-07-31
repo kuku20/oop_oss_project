@@ -1,5 +1,7 @@
 package oop_OSS;
 
+import javax.swing.JOptionPane;
+
 public class LogIn extends CreateAccount {
 
 	LogIn(String id,String password){
@@ -7,6 +9,6 @@ public class LogIn extends CreateAccount {
 	}
 	
 public void toLogin() {
-	System.out.println("You have been login!!");
+	JOptionPane.showMessageDialog(null, "You have been login!!");
 }
 }
