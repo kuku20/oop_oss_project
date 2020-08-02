@@ -238,17 +238,11 @@ class shipment extends view implements vieworder, accountAndBank {
 			// store a delivery order in file
 			JOptionPane.showMessageDialog(null, "delivery order is “shipped”. ");
 		} else if (okeOrNot == 1) {
-			String alert = JOptionPane
-					.showInputDialog("Your CC has been denied,  an error message and terminate confirm shipment ");
-			if (alert == null) {
-				System.out.println("This is cancel button");
-				System.exit(0);
-			} else if (alert.equalsIgnoreCase("")) {
-				System.exit(0);
-				System.out.println("This is OK button without input");
-			} else {
-				System.exit(0);
-			}
+			JOptionPane.showMessageDialog(null, "Your CC has been denied");
+			JOptionPane.showMessageDialog(null, "!!!!terminate confirm shipment");
+
+			System.exit(0);
+
 		} else {
 			System.exit(0);
 		}

@@ -173,47 +173,55 @@ public class OSS {
 							&& supplierLogin.getPassword().equals(passSupplier.get(i))) {
 						supplierLogin.toLogin();
 						// main supplier, where to see and request customer order
-						// Use Case: Process Delivery Order
+						
 						vieworder supplierView = new supplierView();
 						String orderSt = supplierView.orderStatus();
-						System.out.println(orderSt);
-						String[] SupplierAct = { orderSt, "LOG OUT" };
-						int Request = JOptionPane.showOptionDialog(null, "Check delivery orders Status!!!",
-								"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
-								SupplierAct, SupplierAct[0]);
-						if (Request == 0) {
-							// 2. System retrieves and displays delivery orders to supplier.
-
-							supplierView.vieworder(supplierLogin.getId());
-							supplierRequestInvertory reInventory = (supplierRequestInvertory) supplierView;
-							// 3. Supplier selects a delivery order and requests inventory check on items
-							reInventory.inventoryCheck(reInventory.itemName(), reInventory.itemQuantity());
-							// for the delivery order.
-
-						} else if (Request == 1) {
-							// logout back to main option
-							optionCustomerSupplier();
-						} else {
-							System.exit(0);
-						}
-						// Use Case: Confirm Shipment
-						// the order are reserver, it rady for delivery
-						// vieworder supplierView = new shipment();
-						vieworder shipment = new shipment();
-						shipment.vieworder(supplierLogin.getId());
-						// do you want to see the delvery order. in console
-//						get id customer order the order
 						
-						accountAndBank idCformOrder=(accountAndBank) shipment;
-						// you seletc a delivery order
-						String CID = idCformOrder.idCgetorder();
-						// 3. this will get the indexof the idcomtomer
-						int INDEXCC = IdCustomer.indexOf(CID);
-						// this is the credit card of the customer:
-						String CCC = creditCardCustomer.get(INDEXCC);
-						// the system request bank charging the purchase amount of order using the
-						// CCC
-						idCformOrder.charging(CCC);
+							// Use Case: Process Delivery Order
+							String[] SupplierAct = { orderSt, "LOG OUT" };
+							int Request = JOptionPane.showOptionDialog(null, "Check delivery orders Status!!!",
+									"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
+									SupplierAct, SupplierAct[0]);
+							if(orderSt.equals("ordered")) {
+							if (Request == 0) {
+								// 2. System retrieves and displays delivery orders to supplier.
+
+								supplierView.vieworder(supplierLogin.getId());
+								supplierRequestInvertory reInventory = (supplierRequestInvertory) supplierView;
+								// 3. Supplier selects a delivery order and requests inventory check on items
+								reInventory.inventoryCheck(reInventory.itemName(), reInventory.itemQuantity());
+								// for the delivery order.
+
+							} else if (Request == 1) {
+								// logout back to main option
+								optionCustomerSupplier();
+							} else {
+								System.exit(0);
+							}
+						}else if(orderSt.equals("ready")) {
+							
+							// Use Case: Confirm Shipment
+							// the order are reserver, it rady for delivery
+							// vieworder supplierView = new shipment();
+							vieworder shipment = new shipment();
+							shipment.vieworder(supplierLogin.getId());
+							// do you want to see the delvery order. in console
+//							get id customer order the order
+							
+							accountAndBank idCformOrder=(accountAndBank) shipment;
+							// you seletc a delivery order
+							String CID = idCformOrder.idCgetorder();
+							// 3. this will get the indexof the idcomtomer
+							int INDEXCC = IdCustomer.indexOf(CID);
+							// this is the credit card of the customer:
+							String CCC = creditCardCustomer.get(INDEXCC);
+							// the system request bank charging the purchase amount of order using the
+							// CCC
+							idCformOrder.charging(CCC);
+						}else {
+							System.out.println("there is no order waitingg");
+						}
+
 					}
 					if (supplierLogin.getId().equals(IdSupplier.get(i))
 							&& !supplierLogin.getPassword().equals(passSupplier.get(i))) {
