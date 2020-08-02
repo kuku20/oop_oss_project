@@ -133,10 +133,7 @@ class customerChoice implements catalogList, choiceInlist {
 			System.out.println("The customer does not select item and exits");
 			System.exit(0);
 		}
-		for (int i = 0; i < pricePeritem.size(); i++) {
-			total = pricePeritem.get(i) * itemQ.get(i);
-			total = total + total;
-		}
+
 
 	}
 
@@ -150,7 +147,11 @@ class customerChoice implements catalogList, choiceInlist {
 		} else if (shopOrOut == 1) {
 			// See the items has added to the cart
 			cart(Cid);
-
+			double priceEachItem[] = new double [pricePeritem.size()];
+			for (int i = 0; i < pricePeritem.size(); i++) {
+				priceEachItem[i]  = pricePeritem.get(i) * itemQ.get(i);
+				total = total + priceEachItem[i];
+			}
 		} else {
 			System.exit(0);
 		}

@@ -40,7 +40,6 @@ public class OSS {
 				options[0]);
 		if (x == 0) {
 			// this is ask the customer login or create a new account
-			System.out.println("you choice customer");
 			String[] customerC = { "1.Login", "2.Create New Account", "3. Cancel" };
 			int Cx = JOptionPane.showOptionDialog(null,
 					"Do you have an account ? \n If Yes click 1 to login \n If No click 2 to create one ",
@@ -60,7 +59,6 @@ public class OSS {
 			}
 		} else if (x == 1) {
 			// this is ask the supplier login or create a new account
-			System.out.println("you choi supplier");
 
 			String[] supplierC = { "1.Login", "2.Create New Account", "3. Cancel" };
 			int sx = JOptionPane.showOptionDialog(null,
@@ -84,17 +82,11 @@ public class OSS {
 	}
 
 	private static void file() throws IOException {
-		// CheckId idcheck = new accountCheck();
-		File cus = new File(".");
-		FileWriter customer = new FileWriter(cus.getCanonicalPath() + File.separator + "Customer.txt", true);
 
-		File sup = new File(".");
-		FileWriter supplier = new FileWriter(sup.getCanonicalPath() + File.separator + "Supplier.txt", true);
 		File readCustomer = new File("Customer.txt");
-		// if (!Read.exists()) {
-		// System.out.println("The file does not exist.");
-		// System.exit(0);
-		// }
+		 if (!readCustomer.exists()) {
+			 PrintWriter output = new PrintWriter(new File("Customer.txt"));
+		 }
 		Scanner getCustomer = new Scanner(readCustomer);
 		while (getCustomer.hasNext()) {
 			newCustomerId = getCustomer.nextLine();
@@ -107,8 +99,12 @@ public class OSS {
 			passCustomer.add(newCustomerPass);
 			creditCardCustomer.add(newCustomerCc);
 		}
+		getCustomer.close();
 		// get all data in the exist file to the arraylist
 		File readSupplier = new File("Supplier.txt");
+		 if (!readSupplier.exists()) {
+			 PrintWriter output = new PrintWriter(new File("Supplier.txt"));
+		 }
 		Scanner getSupplier = new Scanner(readSupplier);
 		while (getSupplier.hasNext()) {
 			newSupplierId = getSupplier.nextLine();
@@ -116,7 +112,7 @@ public class OSS {
 			IdSupplier.add(newSupplierId);
 			passSupplier.add(newSupplierPass);
 		}
-
+		getSupplier.close();
 	}
 
 	private static void supplierAccount() throws IOException {
@@ -178,16 +174,20 @@ public class OSS {
 						supplierLogin.toLogin();
 						// main supplier, where to see and request customer order
 						// Use Case: Process Delivery Order
-						String[] SupplierAct = { "REQUESTS DELIVERY ORDERS", "LOG OUT" };
-						int Request = JOptionPane.showOptionDialog(null, "Check delivery orders!!!",
+						vieworder supplierView = new supplierView();
+						String orderSt = supplierView.orderStatus();
+						System.out.println(orderSt);
+						String[] SupplierAct = { orderSt, "LOG OUT" };
+						int Request = JOptionPane.showOptionDialog(null, "Check delivery orders Status!!!",
 								"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
 								SupplierAct, SupplierAct[0]);
 						if (Request == 0) {
 							// 2. System retrieves and displays delivery orders to supplier.
-							supplierView supplierView = new supplierView();
+
 							supplierView.vieworder(supplierLogin.getId());
+							supplierRequestInvertory reInventory = (supplierRequestInvertory) supplierView;
 							// 3. Supplier selects a delivery order and requests inventory check on items
-							//
+							reInventory.inventoryCheck(reInventory.itemName(), reInventory.itemQuantity());
 							// for the delivery order.
 
 						} else if (Request == 1) {
@@ -196,7 +196,24 @@ public class OSS {
 						} else {
 							System.exit(0);
 						}
-
+						// Use Case: Confirm Shipment
+						// the order are reserver, it rady for delivery
+						// vieworder supplierView = new shipment();
+						vieworder shipment = new shipment();
+						shipment.vieworder(supplierLogin.getId());
+						// do you want to see the delvery order. in console
+//						get id customer order the order
+						
+						accountAndBank idCformOrder=(accountAndBank) shipment;
+						// you seletc a delivery order
+						String CID = idCformOrder.idCgetorder();
+						// 3. this will get the indexof the idcomtomer
+						int INDEXCC = IdCustomer.indexOf(CID);
+						// this is the credit card of the customer:
+						String CCC = creditCardCustomer.get(INDEXCC);
+						// the system request bank charging the purchase amount of order using the
+						// CCC
+						idCformOrder.charging(CCC);
 					}
 					if (supplierLogin.getId().equals(IdSupplier.get(i))
 							&& !supplierLogin.getPassword().equals(passSupplier.get(i))) {
@@ -330,16 +347,47 @@ public class OSS {
 								amountDue = Cchoice.totalPrice();
 
 								// connect and check to the bank
-								Bank cusCheckBank = new Bank(ccnc, amountDue);
+								OrderRequest cusCheckBank = new OrderRequest(ccnc, amountDue);
 								cusCheckBank.orderAmountCheck(amountDue, ccnc);
 								System.out.println("Customer has ordered items.");
 								// if cc doesn't work update new card
 
 								String newCCNC = cusCheckBank.NewCCN();
 								if (!(newCCNC == null)) {
-									//// update new card
+									//// update new card to the array
 									creditCardCustomer.remove(indexCustomer);
 									creditCardCustomer.add(indexCustomer, newCCNC);
+									// rewrite to customer file
+									File tempXFile = new File("template.txt");
+									File originalXFile = new File("Customer.txt");
+									// Create a Scanner for input and a PrintWriter for output
+									Scanner inXput = new Scanner(originalXFile);
+									PrintWriter outXput = new PrintWriter(tempXFile);
+
+									while (inXput.hasNext()) {
+										String CustomerId = inXput.nextLine();
+										String CustomerPass = inXput.nextLine();
+										String n = inXput.nextLine();
+										String ad = inXput.nextLine();
+										String ph = inXput.nextLine();
+										String Cc = inXput.nextLine();
+										if (CustomerId.equals(customerLogin.getId())) {
+											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad + "\n" + ph + "\n"+newCCNC;
+											String s2x = Cc.replaceAll(Cc, newString);
+											outXput.println(s2x);
+										} else {
+											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad + "\n" + ph + "\n"+Cc;
+											String s2x = Cc.replaceAll(Cc, newString);
+											outXput.println(s2x);
+										}
+									}
+									inXput.close();
+									outXput.close();
+									originalXFile.delete();
+									// Rename the new file to the filename the original file had.
+									if (!tempXFile.renameTo(originalXFile))
+										System.out.println("Could not rename file");
+//	=========================================================================================================
 								}
 								// store a delivery order in textfile
 								PrintWriter orderFile = new PrintWriter("order.txt");
@@ -351,7 +399,6 @@ public class OSS {
 								orderFile.println(customerLogin.getId());
 								orderFile.println(cusCheckBank.checkApprove());
 								orderFile.println(cusCheckBank.bankapproved());
-								orderFile.println(creditCardCustomer.get(indexCustomer));
 								orderFile.close();
 
 								// ===================================
@@ -394,16 +441,13 @@ public class OSS {
 
 				}
 			}
-		} else {
-			JOptionPane.showMessageDialog(null, "you canel");
-			System.exit(0);
-		}
+		}else
 
+	{
+		JOptionPane.showMessageDialog(null, "you canel");
+		System.exit(0);
 	}
 
-	// private static void maincustomer() throws IOException {
-	//
-	//
-	// }
+}
 
 }
