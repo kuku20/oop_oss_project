@@ -91,6 +91,15 @@ public class OSS {
 		File sup = new File(".");
 		FileWriter supplier = new FileWriter(sup.getCanonicalPath() + File.separator + "Supplier.txt", true);
 		File readCustomer = new File("Customer.txt");
+		
+//		PrintWriter invFile = new PrintWriter("Inventory.txt");
+//		int inventory=100;
+//		invFile.println(inventory);
+//		invFile.println(inventory);
+//		invFile.println(inventory);
+//		invFile.println(inventory);
+//		invFile.println(inventory);
+//		invFile.close();
 		// if (!Read.exists()) {
 		// System.out.println("The file does not exist.");
 		// System.exit(0);
@@ -178,7 +187,7 @@ public class OSS {
 						supplierLogin.toLogin();
 						// main supplier, where to see and request customer order
 						// Use Case: Process Delivery Order
-						String[] SupplierAct = { "REQUESTS DELIVERY ORDERS", "LOG OUT" };
+						String[] SupplierAct = { "REQUESTS DELIVERY ORDERS","Request Ready Orders" ,"LOG OUT" };
 						int Request = JOptionPane.showOptionDialog(null, "Check delivery orders!!!",
 								"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
 								SupplierAct, SupplierAct[0]);
@@ -189,10 +198,22 @@ public class OSS {
 							// 3. Supplier selects a delivery order and requests inventory check on items
 							//
 							// for the delivery order.
-
-						} else if (Request == 1) {
+							String[] supplier = {"Order 1","Exit to login"};
+							int Request2 = JOptionPane.showOptionDialog(null, "Chose delivery orders!!!",
+									"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
+									supplier, supplier[0]);
+							if(Request2==0) {
+								supplierView.changeOrder();
+								supplierLogin();
+							}else if(Request2==1) {
+								supplierLogin();
+							}
+						} else if (Request == 2) {
 							// logout back to main option
 							optionCustomerSupplier();
+						}else if(Request==1) {
+							supplierView supplierView = new supplierView();
+							supplierView.confirmShipment();
 						} else {
 							System.exit(0);
 						}
@@ -272,7 +293,7 @@ public class OSS {
 				}
 			}
 		} else {
-			System.out.println("you canel");
+			System.out.println("you cancel");
 		}
 
 	}
@@ -300,7 +321,7 @@ public class OSS {
 							String wellcome = " Wellcome to main page. Customer ID: " + customerLogin.getId();
 							customerLogin.toLogin();
 							// this is where customer can choice to logout or go to the catalog
-							String[] options = { "1. Go to the Catalog", "2. Log OUT", "3. Exit" };
+							String[] options = { "1. Go to the Catalog","2. View Order " ,"3. Log OUT", "4. Exit" };
 							int views = JOptionPane.showOptionDialog(null, "Do you want to shopping?", wellcome,
 									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
 									options[0]);
@@ -326,7 +347,7 @@ public class OSS {
 								// this is the credit card of the customer:
 								ccnc = creditCardCustomer.get(indexCustomer);
 
-								// get the total price form the card detal
+								// get the total price form the card detail
 								amountDue = Cchoice.totalPrice();
 
 								// connect and check to the bank
@@ -355,11 +376,12 @@ public class OSS {
 								orderFile.close();
 
 								// ===================================
-								// View oreder
+								// View order
 								// ===================================
-								view customerView = new view();
+								view customerView = new view(); 
 								customerView.vieworder(customerLogin.getId());
-							} else if (views == 1) {
+								optionCustomerSupplier();
+							} else if (views == 2) {
 								// =========
 								// logout
 								// =============
@@ -368,7 +390,12 @@ public class OSS {
 								optionCustomerSupplier();
 								// System.exit(1);
 
-							} else {
+							} else if(views==1)
+							{
+								view customerView= new view();
+								customerView.vieworder(customerLogin.getId());
+							}
+							else {
 								System.exit(1);
 							}
 
@@ -395,15 +422,8 @@ public class OSS {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "you canel");
+			JOptionPane.showMessageDialog(null, "you cancel");
 			System.exit(0);
 		}
-
 	}
-
-	// private static void maincustomer() throws IOException {
-	//
-	//
-	// }
-
 }
