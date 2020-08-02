@@ -240,7 +240,6 @@ class shipment extends view implements vieworder, accountAndBank {
 		} else if (okeOrNot == 1) {
 			JOptionPane.showMessageDialog(null, "Your CC has been denied");
 			JOptionPane.showMessageDialog(null, "!!!!terminate confirm shipment");
-
 			System.exit(0);
 
 		} else {

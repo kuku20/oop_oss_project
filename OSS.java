@@ -75,7 +75,7 @@ public class OSS {
 				System.exit(1);
 			}
 		} else {
-			System.out.println("you choice cancel");
+			System.out.println("you cancel the program");
 			System.exit(2);
 		}
 
@@ -84,9 +84,9 @@ public class OSS {
 	private static void file() throws IOException {
 
 		File readCustomer = new File("Customer.txt");
-		 if (!readCustomer.exists()) {
-			 PrintWriter output = new PrintWriter(new File("Customer.txt"));
-		 }
+		if (!readCustomer.exists()) {
+			PrintWriter output = new PrintWriter(new File("Customer.txt"));
+		}
 		Scanner getCustomer = new Scanner(readCustomer);
 		while (getCustomer.hasNext()) {
 			newCustomerId = getCustomer.nextLine();
@@ -102,9 +102,9 @@ public class OSS {
 		getCustomer.close();
 		// get all data in the exist file to the arraylist
 		File readSupplier = new File("Supplier.txt");
-		 if (!readSupplier.exists()) {
-			 PrintWriter output = new PrintWriter(new File("Supplier.txt"));
-		 }
+		if (!readSupplier.exists()) {
+			PrintWriter output = new PrintWriter(new File("Supplier.txt"));
+		}
 		Scanner getSupplier = new Scanner(readSupplier);
 		while (getSupplier.hasNext()) {
 			newSupplierId = getSupplier.nextLine();
@@ -173,16 +173,16 @@ public class OSS {
 							&& supplierLogin.getPassword().equals(passSupplier.get(i))) {
 						supplierLogin.toLogin();
 						// main supplier, where to see and request customer order
-						
+
 						vieworder supplierView = new supplierView();
 						String orderSt = supplierView.orderStatus();
-						
-							// Use Case: Process Delivery Order
-							String[] SupplierAct = { orderSt, "LOG OUT" };
-							int Request = JOptionPane.showOptionDialog(null, "Check delivery orders Status!!!",
-									"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
-									SupplierAct, SupplierAct[0]);
-							if(orderSt.equals("ordered")) {
+
+						// Use Case: Process Delivery Order
+						String[] SupplierAct = { orderSt, "LOG OUT" };
+						int Request = JOptionPane.showOptionDialog(null, "Check delivery orders Status!!!",
+								"Hello Supplier!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null,
+								SupplierAct, SupplierAct[0]);
+						if (orderSt.equals("ordered")) {
 							if (Request == 0) {
 								// 2. System retrieves and displays delivery orders to supplier.
 
@@ -198,17 +198,17 @@ public class OSS {
 							} else {
 								System.exit(0);
 							}
-						}else if(orderSt.equals("ready")) {
-							
+						} else if (orderSt.equals("ready")) {
+
 							// Use Case: Confirm Shipment
 							// the order are reserver, it rady for delivery
 							// vieworder supplierView = new shipment();
 							vieworder shipment = new shipment();
 							shipment.vieworder(supplierLogin.getId());
 							// do you want to see the delvery order. in console
-//							get id customer order the order
-							
-							accountAndBank idCformOrder=(accountAndBank) shipment;
+							// get id customer order the order
+
+							accountAndBank idCformOrder = (accountAndBank) shipment;
 							// you seletc a delivery order
 							String CID = idCformOrder.idCgetorder();
 							// 3. this will get the indexof the idcomtomer
@@ -218,7 +218,7 @@ public class OSS {
 							// the system request bank charging the purchase amount of order using the
 							// CCC
 							idCformOrder.charging(CCC);
-						}else {
+						} else {
 							System.out.println("there is no order waitingg");
 						}
 
@@ -314,11 +314,9 @@ public class OSS {
 				customerLogin();
 			} else {
 				// main customer page
-
 				LogIn customerLogin = new LogIn(cusLogId.getText(), cusLogPass.getText());
 				boolean idexist = IdCustomer.contains(customerLogin.getId());
 				if (idexist) {
-					// maincustomer();
 					for (int i = 0; i < IdCustomer.size(); i++) {
 						if (customerLogin.getId().equals(IdCustomer.get(i))
 								&& customerLogin.getPassword().equals(passCustomer.get(i))) {
@@ -380,11 +378,13 @@ public class OSS {
 										String ph = inXput.nextLine();
 										String Cc = inXput.nextLine();
 										if (CustomerId.equals(customerLogin.getId())) {
-											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad + "\n" + ph + "\n"+newCCNC;
+											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad
+													+ "\n" + ph + "\n" + newCCNC;
 											String s2x = Cc.replaceAll(Cc, newString);
 											outXput.println(s2x);
 										} else {
-											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad + "\n" + ph + "\n"+Cc;
+											String newString = CustomerId + "\n" + CustomerPass + "\n" + n + "\n" + ad
+													+ "\n" + ph + "\n" + Cc;
 											String s2x = Cc.replaceAll(Cc, newString);
 											outXput.println(s2x);
 										}
@@ -395,7 +395,7 @@ public class OSS {
 									// Rename the new file to the filename the original file had.
 									if (!tempXFile.renameTo(originalXFile))
 										System.out.println("Could not rename file");
-//	=========================================================================================================
+
 								}
 								// store a delivery order in textfile
 								PrintWriter orderFile = new PrintWriter("order.txt");
@@ -449,13 +449,13 @@ public class OSS {
 
 				}
 			}
-		}else
+		} else
 
-	{
-		JOptionPane.showMessageDialog(null, "you canel");
-		System.exit(0);
+		{
+			JOptionPane.showMessageDialog(null, "you cancel");
+			System.exit(0);
+		}
+
 	}
-
-}
 
 }
