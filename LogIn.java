@@ -9,6 +9,7 @@ public class LogIn extends CreateAccount {
 	}
 	
 public void toLogin() {
-	JOptionPane.showMessageDialog(null, "You have been login!!");
+	JOptionPane.showMessageDialog(null, "You have been logged in!!");
 }
 }
+

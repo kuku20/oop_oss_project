@@ -39,7 +39,7 @@ class OrderRequest implements Bank {
 	@Override
 	public void orderAmountCheck(double amount, String CCN) {
 
-		String check = "The bank have check the cc number: " + CCN + " for the amount purchase: $" + amount;
+		String check = "The bank has charged the cc number: " + CCN + " for the amount purchase: $" + amount;
 		String[] bankCheck = { "Approved", "Denied" };
 		int okeOrNot = JOptionPane.showOptionDialog(null, check, "Bank Cheking....", JOptionPane.PLAIN_MESSAGE,
 				JOptionPane.INFORMATION_MESSAGE, null, bankCheck, bankCheck[0]);
@@ -89,7 +89,7 @@ class OrderRequest implements Bank {
 	@Override
 	public void toDisplayOrder(String Display) {
 		// TODO Auto-generated method stub
-		System.out.println("to customer: this is your order detail...");
+		System.out.println("To Customer: Requested Order Detail...");
 	}
 
 	@Override

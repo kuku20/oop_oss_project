@@ -42,15 +42,15 @@ class customerChoice implements catalogList, choiceInlist {
 
 	private void showdatalog() {
 		int[][] cart = new int[4][1];
-		String[] options = { "Buy Iphone X at price $865.32", "Buy Laptop Lenovo with price $999",
-				"Buy Scooter at price $100", " Buy a Guita price $299.9", "Buy XBox at price $325.2", "Exit" };
-		int x = JOptionPane.showOptionDialog(null, "Choice Items you want!!", "Wellcome to the Catalog",
+		String[] options = { "Buy iPhone X at the price of $865.32", "Buy Laptop Lenovo at the price of $999",
+				"Buy Scooter at the price of $100", " Buy a Guitar at the price of $299.90", "Buy XBox at the price of $325.20", "Exit" };
+		int x = JOptionPane.showOptionDialog(null, "Items Available!!", "Welcome to the Catalog",
 				JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (x == 0) {
 			try {
-				String amount = JOptionPane.showInputDialog("Enter the quantity you want to buy Iphone");
+				String amount = JOptionPane.showInputDialog("Enter the number of iPhone's you want to buy");
 				int IdItem = 1;
-				String ItemName = "Iphone";
+				String ItemName = "iPhone";
 				double priceitem = 865.32;
 				int fistItem = Integer.parseInt(amount);
 				itemQ.add(fistItem);
@@ -65,7 +65,7 @@ class customerChoice implements catalogList, choiceInlist {
 
 		} else if (x == 1) {
 			try {
-				String amount = JOptionPane.showInputDialog("Enter the quantity you want to buy Lenovo");
+				String amount = JOptionPane.showInputDialog("Enter the number of Lenovos you want to buy");
 				int IdItem = 2;
 				String ItemName = "Lenovo";
 				double priceitem = 999;
@@ -82,7 +82,7 @@ class customerChoice implements catalogList, choiceInlist {
 
 		} else if (x == 2) {
 			try {
-				String amount = JOptionPane.showInputDialog("Enter the quantity you want to buy Scooter");
+				String amount = JOptionPane.showInputDialog("Enter the number of Scooters you want to buy");
 				int IdItem = 3;
 				String ItemName = "Scooter";
 				double priceitem = 100;
@@ -99,10 +99,10 @@ class customerChoice implements catalogList, choiceInlist {
 
 		} else if (x == 3) {
 			try {
-				String amount = JOptionPane.showInputDialog("Enter the quantity you want to buy Guita");
+				String amount = JOptionPane.showInputDialog("Enter the number of Guitars you want to buy");
 				int IdItem = 4;
-				String ItemName = "Guita";
-				double priceitem = 299.9;
+				String ItemName = "Guitar";
+				double priceitem = 299.90;
 				pricePeritem.add(priceitem);
 				int fourthItem = Integer.parseInt(amount);
 				itemId.add(IdItem);
@@ -115,10 +115,10 @@ class customerChoice implements catalogList, choiceInlist {
 			}
 		} else if (x == 4) {
 			try {
-				String amount = JOptionPane.showInputDialog("Enter the quantity you want to buy XBox");
+				String amount = JOptionPane.showInputDialog("Enter number of XBOX's you want to buy");
 				int IdItem = 5;
 				String ItemName = "XBox";
-				double priceitem = 325.2;
+				double priceitem = 325.20;
 				pricePeritem.add(priceitem);
 				int fivthItem = Integer.parseInt(amount);
 				itemId.add(IdItem);
@@ -139,8 +139,8 @@ class customerChoice implements catalogList, choiceInlist {
 
 	private void shopMoreOrOut() {
 		// do you want to shop more or do you want to check out
-		String[] shopOrOutOP = { "Do you want to shop more", "Go to Your cart" };
-		int shopOrOut = JOptionPane.showOptionDialog(null, "You have make your order", "Main page",
+		String[] shopOrOutOP = { "Continue Shopping?", "Go to Your Cart" };
+		int shopOrOut = JOptionPane.showOptionDialog(null, "Order has been made", "Main page",
 				JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, shopOrOutOP, shopOrOutOP[0]);
 		if (shopOrOut == 0) {
 			showdatalog();
@@ -148,6 +148,7 @@ class customerChoice implements catalogList, choiceInlist {
 			// See the items has added to the cart
 			cart(Cid);
 			double priceEachItem[] = new double [pricePeritem.size()];
+			System.out.println(""+pricePeritem.size());
 			for (int i = 0; i < pricePeritem.size(); i++) {
 				priceEachItem[i]  = pricePeritem.get(i) * itemQ.get(i);
 				total = total + priceEachItem[i];
@@ -160,7 +161,7 @@ class customerChoice implements catalogList, choiceInlist {
 
 	private void viewOrder() {
 
-		JOptionPane.showMessageDialog(null, "This is your order detail ans Status", null, 3);
+		JOptionPane.showMessageDialog(null, "This is your Order Detail and Status", null, 3);
 
 	}
 
@@ -195,21 +196,21 @@ class customerChoice implements catalogList, choiceInlist {
 
 	@Override
 	public void cart(String Cid) {
-		JOptionPane.showMessageDialog(null, "Your has browsed and add item: " + itemName + " to your cart");
+		JOptionPane.showMessageDialog(null, "Your have Selected and Added item: " + itemName + " to your cart");
 	}
 
 	@Override
 	public void cartDetail(String Cid) {
-		JOptionPane.showMessageDialog(null, "Customer orders details: see in the Console!!!");
+		JOptionPane.showMessageDialog(null, "Customer Orders Details: Available in the Console!!!");
 		System.out.println("===========================");
-		System.out.println("Customer orders details:");
-		System.out.println("The customer with id: " + Cid);
+		System.out.println("Customer Orders Details:");
+		System.out.println("The Customer with ID: " + Cid);
 		for (int i = 0; i < pricePeritem.size(); i++) {
-			System.out.println(itemName.get(i) + " with quantities is: " + itemQ.get(i));
+			System.out.println(itemName.get(i) + " Quantity: " + itemQ.get(i));
 		}
-		System.out.println("The total price is: $" + total);
+		System.out.println("The Total Price is: $" + total);
 		System.out.println("============================");
-
+		pricePeritem.clear();
 	}
 
 }
